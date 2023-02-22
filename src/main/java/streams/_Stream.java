@@ -3,6 +3,7 @@ package streams;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.IntConsumer;
+import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 
@@ -15,23 +16,32 @@ public class _Stream {
                 new Person("John", MALE),
                 new Person("Maria", FEMALE),
                 new Person("Aisha", FEMALE),
-                new Person("Alex", NONBINARY),
+//                new Person("Alex", NONBINARY),
                 new Person("Alice", FEMALE)
         );
 
-        people.stream()
-                .map(person -> person.gender)
-                .collect(Collectors.toSet())
-                .forEach(System.out::println);
+//        people.stream()
+//                .map(person -> person.gender)
+//                .collect(Collectors.toSet())
+//                .forEach(System.out::println);
+//
+//        Function<Person, String> personStringFunction = person -> person.name;
+//        ToIntFunction<String> length = String::length;
+//        IntConsumer println = System.out::println;
+//        people.stream()
+//                .map(personStringFunction)
+//                .mapToInt(length)
+//                .forEach(println);
 
-        Function<Person, String> personStringFunction = person -> person.name;
-        ToIntFunction<String> length = String::length;
-        IntConsumer println = System.out::println;
+        boolean containsOnlyFemales = people.stream()
+                .allMatch(person -> FEMALE.equals(person.gender));
 
-        people.stream()
-                .map(personStringFunction)
-                .mapToInt(length)
-                .forEach(println);
+        System.out.println(containsOnlyFemales);
+
+        boolean noNonBinary = people.stream()
+                .noneMatch(person -> NONBINARY.equals(person.gender));
+
+        System.out.println(noNonBinary);
     }
 
     static class Person {
